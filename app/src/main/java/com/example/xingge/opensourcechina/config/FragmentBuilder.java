@@ -19,9 +19,8 @@ public class FragmentBuilder {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
-    private BaseFragment lastFragment;
     private BaseFragment fragment;
-    private boolean isBack = false;
+    private String simpleName;
     private FragmentBuilder(){
         init();
     }
@@ -39,10 +38,10 @@ public class FragmentBuilder {
     }
 
     public FragmentBuilder start(Class<? extends BaseFragment> fragmentClass){
-        this.isBack = false;
         transaction = fragmentManager.beginTransaction();
         //使用Fragment类名做Tag
-        String simpleName = fragmentClass.getSimpleName();
+
+        simpleName = fragmentClass.getSimpleName();
         //根据tag查找fragment 如果能查找到就代表该Fragment已经实例化了，否则去动态实例化
 
         fragment = (BaseFragment) fragmentManager.findFragmentByTag(simpleName);
@@ -62,12 +61,13 @@ public class FragmentBuilder {
         }
 
         //隐藏上一个fragment
-        if(lastFragment != null) {
-            transaction.hide(lastFragment);
+        if(APP.lastFragment != null) {
+            transaction.hide(APP.lastFragment);
         }
 
         //已经添加就调用show方法显示
         transaction.show(fragment);
+        transaction.addToBackStack(simpleName);
 
         return this;
     }
@@ -79,21 +79,19 @@ public class FragmentBuilder {
         return this;
     }
 
-    public FragmentBuilder isBack(boolean isBack){
-        this.isBack = isBack;
-        if (isBack)
-            transaction.addToBackStack(null);
-        return this;
-    }
+//    public FragmentBuilder isBack(boolean isBack){
+//        if (isBack)
+//            transaction.addToBackStack(simpleName);
+//        return this;
+//    }
 
     public BaseFragment build(){
-        if (!isBack)
-            lastFragment = fragment;
+        APP.lastFragment = fragment;
         transaction.commit();
         return fragment;
     }
 
     public void setLastFragment(BaseFragment lastFragment) {
-        this.lastFragment = lastFragment;
+        APP.lastFragment = lastFragment;
     }
 }

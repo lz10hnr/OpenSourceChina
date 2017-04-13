@@ -2,6 +2,7 @@ package com.example.xingge.opensourcechina.util;
 
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.model.http.IHttp;
 import com.example.xingge.opensourcechina.model.http.callback.NetWorkCallBack;
@@ -176,6 +177,8 @@ public class OkHttpUtils implements IHttp{
 
     @Override
     public void loadImage(String imgUrl, ImageView imageView) {
+
+        Glide.with(APP.activity).load(imgUrl).into(imageView);
 
     }
 }

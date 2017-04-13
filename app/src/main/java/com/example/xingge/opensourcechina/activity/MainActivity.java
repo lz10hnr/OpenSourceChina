@@ -1,6 +1,8 @@
 package com.example.xingge.opensourcechina.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -9,11 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.R;
 import com.example.xingge.opensourcechina.base.BaseActivity;
+import com.example.xingge.opensourcechina.base.BaseFragment;
 import com.example.xingge.opensourcechina.config.FragmentBuilder;
+import com.example.xingge.opensourcechina.fragment.DiscoverFragment;
 import com.example.xingge.opensourcechina.fragment.NewsFragment;
 import com.example.xingge.opensourcechina.fragment.TweetFragment;
+import com.example.xingge.opensourcechina.util.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,8 +79,10 @@ public class MainActivity extends BaseActivity {
                 FragmentBuilder.getInstance().start(TweetFragment.class).build();
                 break;
             case R.id.addBtn:
+
                 break;
             case R.id.discoverBtn:
+                FragmentBuilder.getInstance().start(DiscoverFragment.class).build();
                 break;
             case R.id.mineBtn:
                 break;
@@ -85,7 +93,28 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        android.os.Process.killProcess(android.os.Process.myPid());//获取PID
-        System.exit(0);
+        Utils.exit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(
+                getSupportFragmentManager().getBackStackEntryCount() - 1);
+        String simpleName = entry.getName();
+        if("NewsFragment".equals(simpleName) || "TweetFragment".equals(simpleName)
+                || "DiscoverFragment".equals(simpleName)){
+            finish();
+        }else {
+            if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStackImmediate();
+                String name = getSupportFragmentManager().getBackStackEntryAt(
+                        getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+                APP.lastFragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(name);
+
+            }
+
+        }
+
+
     }
 }

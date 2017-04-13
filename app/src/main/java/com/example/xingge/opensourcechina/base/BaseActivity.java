@@ -10,6 +10,8 @@ import android.util.Log;
 import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.R;
 import com.example.xingge.opensourcechina.config.FragmentBuilder;
+import com.example.xingge.opensourcechina.fragment.NewsFragment;
+import com.example.xingge.opensourcechina.util.Utils;
 
 import java.util.List;
 
@@ -44,5 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //加载数据
     protected abstract void loadData();
+
 
 }

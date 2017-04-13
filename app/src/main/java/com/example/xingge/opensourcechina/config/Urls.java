@@ -16,4 +16,6 @@ public class Urls {
 
     //资讯
     public static final String NEWSLIST = BASE_URL + "action/api/news_list";
+
+    public static final String PANDABANNER = "http://www.ipanda.com/kehuduan/PAGE14501749764071042/index.json";
 }

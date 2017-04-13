@@ -58,6 +58,6 @@ public class TweetFragment extends BaseFragment {
 
     @OnClick(R.id.mBtn)
     public void onViewClicked() {
-        FragmentBuilder.getInstance().start(AFragment.class).isBack(true).build();
+        FragmentBuilder.getInstance().start(AFragment.class).build();
     }
 }
