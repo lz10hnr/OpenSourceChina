@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<blog>
+    <age>30</age>
+    <name>jhon</name>
+    <person>
+        <pAge>36</pAge>
+        <pName>saliy</pName>
+    </person>
+</blog>
