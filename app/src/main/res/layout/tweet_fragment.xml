@@ -9,15 +9,11 @@
         android:id="@+id/mBtn"
         android:text="戳我"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="动弹"
-        android:textSize="30sp"
-        android:background="#ff0000"
-        android:textColor="#ffffff"
-        android:gravity="center"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mScircleImg"/>
 
 
 </LinearLayout>

@@ -3,12 +3,9 @@ package com.example.xingge.opensourcechina.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.xingge.opensourcechina.APP;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected Bundle bundle;
     protected Unbinder unbinder;
+    private boolean isFirst = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,8 +37,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateTitleBar();
-        loadData();
+        if(isFirst) {
+            updateTitleBar();
+            loadData();
+        }
     }
 
 
@@ -91,8 +91,6 @@ public abstract class BaseFragment extends Fragment {
      * 当Fragment可见时，在此刷setParams新页面显示
      */
     protected void onShow(){
-        APP.lastFragment = this;
-        String simpleName = APP.lastFragment.getClass().getSimpleName();
         updateTitleBar();
     };
 
@@ -117,5 +115,9 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        isFirst = false;
+    }
 }

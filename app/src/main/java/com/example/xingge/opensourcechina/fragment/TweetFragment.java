@@ -5,12 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.R;
 import com.example.xingge.opensourcechina.activity.MainActivity;
 import com.example.xingge.opensourcechina.base.BaseFragment;
 import com.example.xingge.opensourcechina.config.FragmentBuilder;
+import com.example.xingge.opensourcechina.util.Utils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +29,8 @@ import butterknife.Unbinder;
 public class TweetFragment extends BaseFragment {
     @BindView(R.id.mBtn)
     Button mBtn;
+    @BindView(R.id.mScircleImg)
+    ImageView mScircleImg;
 
     @Override
     protected int layoutId() {
@@ -47,6 +54,13 @@ public class TweetFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+
+        try {
+            InputStream is = getActivity().getAssets().open("a.png");
+            mScircleImg.setImageBitmap(Utils.getCircleImg(is));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -1,8 +1,8 @@
 package com.example.xingge.opensourcechina.fragment;
 
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by xingge on 2017/4/13.
@@ -34,6 +32,10 @@ public class DiscoverFragment extends BaseFragment {
     private IDiscoverModel discoverModel;
     private List<ImageView> imageViews;
     private BannerPagerAdapter adapter;
+    private int currentNum = 1000000;
+    private int updateWhat = 100;
+    private int stopWhat = 200;
+    private long updateTime = 3000;
 
     @Override
     protected int layoutId() {
@@ -43,6 +45,34 @@ public class DiscoverFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
 
+        bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentNum = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onHidden() {
+        super.onHidden();
+        handler.sendEmptyMessage(stopWhat);
+    }
+
+    @Override
+    protected void onShow() {
+        super.onShow();
+        handler.sendEmptyMessageDelayed(updateWhat,updateTime);
     }
 
     @Override
@@ -74,6 +104,20 @@ public class DiscoverFragment extends BaseFragment {
         });
     }
 
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == updateWhat) {
+                bannerViewPager.setCurrentItem(currentNum++);
+                handler.sendEmptyMessageDelayed(updateWhat,updateTime);
+            }else if (msg.what == stopWhat) {
+                //暂停
+                handler.removeMessages(updateWhat);
+            }
+        }
+    };
+
 
     private void showBanner(String xmlData){
         Gson gson = new Gson();
@@ -91,6 +135,9 @@ public class DiscoverFragment extends BaseFragment {
         }
         adapter = new BannerPagerAdapter(imageViews);
         bannerViewPager.setAdapter(adapter);
+        bannerViewPager.setCurrentItem(currentNum++);
+
+        handler.sendEmptyMessageDelayed(updateWhat,updateTime);
     }
 
 }

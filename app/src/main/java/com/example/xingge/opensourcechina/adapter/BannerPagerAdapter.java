@@ -22,7 +22,7 @@ public class BannerPagerAdapter extends PagerAdapter {
     public int getCount() {
         if (imgs == null)
             return 0;
-        return imgs.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BannerPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        super.destroyItem(container, position, object);
-        container.removeView(imgs.get(position));
+//        container.removeView(imgs.get(position % imgs.size()));
     }
 
     /**
@@ -50,7 +50,9 @@ public class BannerPagerAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imageView = imgs.get(position);
+        ImageView imageView = imgs.get(position % imgs.size());
+        if(imageView.getParent() != null)
+            ((ViewGroup)imageView.getParent()).removeView(imageView);
         container.addView(imageView);
         return imageView;
     }
