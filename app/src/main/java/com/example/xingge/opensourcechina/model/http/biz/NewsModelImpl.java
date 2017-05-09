@@ -23,4 +23,18 @@ public class NewsModelImpl implements INewsModel {
 
         HttpFactory.create().get(Urls.NEWSLIST,params,callBack);
     }
+
+    @Override
+    public void search(String catalog, String content, int pageIndex, NetWorkCallBack callBack) {
+
+        Map<String,String> params = new HashMap<>();
+        params.put("catalog", catalog);
+        params.put("content", content);
+        params.put("pageIndex",String.valueOf(pageIndex));
+        params.put("pageSize", Urls.PAGESIZE);
+
+        HttpFactory.create().get(Urls.SEARCH,params,callBack);
+    }
+
+
 }

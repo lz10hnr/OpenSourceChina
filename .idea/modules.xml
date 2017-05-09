@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OpenSourceChina.iml" filepath="$PROJECT_DIR$/OpenSourceChina.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cookie/cookie.iml" filepath="$PROJECT_DIR$/cookie/cookie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/turing/turing.iml" filepath="$PROJECT_DIR$/turing/turing.iml" />
     </modules>
   </component>
 </project>

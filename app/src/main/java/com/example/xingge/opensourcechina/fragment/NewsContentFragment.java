@@ -1,6 +1,8 @@
 package com.example.xingge.opensourcechina.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.androidkun.PullToRefreshRecyclerView;
@@ -82,14 +84,22 @@ public class NewsContentFragment extends BaseFragment {
     }
 
     @Override
-    protected void onShow() {
-
+    public void setParams(Bundle bundle) {
+        super.setParams(bundle);
+        if(bundle != null) {
+            String aaa = bundle.getString("aaa");
+            Log.d("NewsContentFragment", aaa);
+        }
     }
 
+    /**
+     * 当前fragment是否在viewpager中可见
+     * @param isVisibleToUser
+     */
     @Override
-    protected void onHidden() {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //当前fragment可见
 
     }
-
-
 }

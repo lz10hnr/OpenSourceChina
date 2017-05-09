@@ -9,14 +9,15 @@ import com.thoughtworks.xstream.XStream;
 public class XmlParserBuilder {
 
     private static XmlParserBuilder xmlParserBuilder;
-    private XStream xStream;
+    private static XStream xStream;
     private XmlParserBuilder(){
-        xStream = new XStream();
+
     }
     public synchronized static XmlParserBuilder getInstance(){
         if(xmlParserBuilder == null)
             xmlParserBuilder = new XmlParserBuilder();
 
+        xStream = new XStream();
         return xmlParserBuilder;
     }
 

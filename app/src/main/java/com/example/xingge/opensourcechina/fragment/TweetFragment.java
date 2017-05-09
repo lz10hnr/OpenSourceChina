@@ -1,25 +1,29 @@
 package com.example.xingge.opensourcechina.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.R;
 import com.example.xingge.opensourcechina.activity.MainActivity;
+import com.example.xingge.opensourcechina.adapter.TweenAdapter;
 import com.example.xingge.opensourcechina.base.BaseFragment;
-import com.example.xingge.opensourcechina.config.FragmentBuilder;
-import com.example.xingge.opensourcechina.util.Utils;
+import com.example.xingge.opensourcechina.config.XmlParserBuilder;
+import com.example.xingge.opensourcechina.model.enitity.TweetList;
+import com.example.xingge.opensourcechina.model.http.biz.ITweetModel;
+import com.example.xingge.opensourcechina.model.http.biz.TweetModelImpl;
+import com.example.xingge.opensourcechina.model.http.callback.NetWorkCallBack;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -27,10 +31,13 @@ import butterknife.Unbinder;
  */
 
 public class TweetFragment extends BaseFragment {
-    @BindView(R.id.mBtn)
-    Button mBtn;
-    @BindView(R.id.mScircleImg)
-    ImageView mScircleImg;
+
+    @BindView(R.id.tweenRecyclerView)
+    RecyclerView tweenRecyclerView;
+    private List<TweetList.TweetBean> datas;
+    private TweenAdapter adapter;
+
+    private ITweetModel tweetModel;
 
     @Override
     protected int layoutId() {
@@ -45,6 +52,13 @@ public class TweetFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+        tweetModel = new TweetModelImpl();
+        datas = new ArrayList<>();
+
+        adapter = new TweenAdapter(getActivity(),datas);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        tweenRecyclerView.setLayoutManager(manager);
+        tweenRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -55,23 +69,33 @@ public class TweetFragment extends BaseFragment {
     @Override
     protected void loadData() {
 
-        try {
-            InputStream is = getActivity().getAssets().open("a.png");
-            mScircleImg.setImageBitmap(Utils.getCircleImg(is));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        tweetModel.newTweentList("0", "0", new NetWorkCallBack() {
+            @Override
+            public void onSuccess(String xmlData) {
+                Log.d("TweetFragment", xmlData);
+                TweetList tweetList = (TweetList) XmlParserBuilder.getInstance()
+                        .alias("oschina",TweetList.class)
+                        .alias("tweet",TweetList.TweetBean.class)
+                        .alias("user",TweetList.TweetBean.UserBean.class)
+                        .build(xmlData);
+                datas.addAll(tweetList.getTweets());
+                adapter.init(datas);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+
+            }
+        });
 
     }
 
     @Override
     protected void updateTitleBar() {
+        super.updateTitleBar();
         if (APP.activity instanceof MainActivity)
             ((MainActivity) APP.activity).getTitleTv().setText("动弹");
     }
 
-    @OnClick(R.id.mBtn)
-    public void onViewClicked() {
-        FragmentBuilder.getInstance().start(AFragment.class).build();
-    }
 }

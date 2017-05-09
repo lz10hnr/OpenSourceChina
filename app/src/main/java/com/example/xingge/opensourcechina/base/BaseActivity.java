@@ -23,7 +23,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        APP.activity = this;
         ButterKnife.bind(this);
         init();
         initListener();
@@ -32,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        APP.activity = this;
         loadData();
     }
 

@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#42f185">
+        android:background="#42f185"
+        android:id="@+id/topGroup">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/search_icon"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:id="@+id/searchImg"/>
 
     </RelativeLayout>
 
@@ -41,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:id="@+id/bottomGroup"
         android:weightSum="5">
 
         <RadioButton

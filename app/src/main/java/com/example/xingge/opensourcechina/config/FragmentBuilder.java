@@ -11,6 +11,15 @@ import com.example.xingge.opensourcechina.base.BaseFragment;
 
 /**
  * Created by xingge on 2017/4/12.
+ *
+ * 1、容器
+ * 2、lastFragment
+ * 3、隐藏或者替换
+ * 4、传值
+ * 5、添加回退栈
+ * 6、回退栈管理
+ * 7、一级页面管理
+ *
  */
 
 public class FragmentBuilder {

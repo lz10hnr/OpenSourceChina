@@ -13,4 +13,5 @@ public class APP extends Application {
 
     public static BaseActivity activity;
     public static BaseFragment lastFragment;
+
 }

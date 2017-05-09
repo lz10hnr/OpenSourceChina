@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.xingge.opensourcechina.APP;
+import com.example.xingge.opensourcechina.activity.MainActivity;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -104,7 +107,13 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 更改标题内容
      */
-    protected void updateTitleBar(){};
+    protected void updateTitleBar(){
+
+        if(APP.activity instanceof MainActivity) {
+            ((MainActivity) APP.activity).getTopGroup().setVisibility(View.VISIBLE);
+            ((MainActivity) APP.activity).getBottomGroup().setVisibility(View.VISIBLE);
+        }
+    };
 
     /**
      * Fragment销毁时

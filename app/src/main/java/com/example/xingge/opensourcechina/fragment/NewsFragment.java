@@ -1,10 +1,12 @@
 package com.example.xingge.opensourcechina.fragment;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.xingge.opensourcechina.APP;
 import com.example.xingge.opensourcechina.R;
@@ -27,10 +29,13 @@ public class NewsFragment extends BaseFragment {
     @BindView(R.id.newsViewPager)
     ViewPager newsViewPager;
 
+
     private NewsPagerAdapter pagerAdapter;
 
     private List<String> titles;
     private List<BaseFragment> fragments;
+
+    private NewsContentFragment newsContentFragment;
 
     @Override
     protected int layoutId() {
@@ -39,6 +44,7 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+
 
     }
 
@@ -52,7 +58,7 @@ public class NewsFragment extends BaseFragment {
         titles.add("推荐");
 
         fragments = new ArrayList<>();
-        fragments.add(new NewsContentFragment());
+        fragments.add(newsContentFragment = new NewsContentFragment());
 
         pagerAdapter = new NewsPagerAdapter(getFragmentManager(),fragments,titles);
         newsViewPager.setAdapter(pagerAdapter);
@@ -62,6 +68,8 @@ public class NewsFragment extends BaseFragment {
     @Override
     protected void initListener() {
 
+
+
     }
 
     @Override
@@ -69,12 +77,12 @@ public class NewsFragment extends BaseFragment {
 
     }
 
-
     @Override
     protected void updateTitleBar() {
-
-        if(APP.activity instanceof MainActivity)
-            ((MainActivity)APP.activity).getTitleTv().setText("综合");
+        super.updateTitleBar();
+        if(APP.activity instanceof MainActivity) {
+            ((MainActivity) APP.activity).getTitleTv().setText("综合");
+        }
 
     }
 }

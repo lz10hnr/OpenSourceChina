@@ -17,6 +17,9 @@ import java.io.InputStream;
 
 public class Utils {
 
+    /**
+     * 退出应用
+     */
     public static final void exit(){
         android.os.Process.killProcess(android.os.Process.myPid());//获取PID
         System.exit(0);

@@ -11,5 +11,6 @@ import java.util.Map;
 public interface INewsModel {
 
     void newsList(String pageIndex, NetWorkCallBack callBack);
+    void search(String catalog,String content,int pageIndex,NetWorkCallBack callBack);
 
 }
